@@ -40,3 +40,7 @@ Room VSA is a high-performance, client-side web application for 3D room visualiz
 ## Security
 
 Room VSA utilizes Zod to strictly validate all configurations loaded from local storage or uploaded via JSON files, ensuring robust protection against client-side injection and DoS attacks.
+
+## Attribution
+
+<a href="https://unsplash.com/illustrations/isometric-view-of-a-bedroom-with-bed-and-tv-AynTSqYghis?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Illustration</a> by <a href="https://unsplash.com/@cansu_tech/illustrations?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Cansu Sarp</a> on <a href="https://unsplash.com/illustrations?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
