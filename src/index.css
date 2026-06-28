@@ -1,0 +1,330 @@
+/* Removed remote font import, falling back to local sans-serif fonts */
+
+:root {
+  --font-main: 'Outfit', sans-serif;
+  --bg-color: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+
+  /* Gulmarg Winters-N Approximation */
+  --wall-color: #d6dfeb;
+
+  /* Themes Variables (Defaults to Warm) */
+  --theme-wardrobe: #e6c287; /* Warm Wood */
+  --theme-pot: #cc7752; /* Terracotta */
+  --theme-art: #f0a04b; /* Mustard Art */
+}
+
+[data-theme='warm'] {
+  --theme-wardrobe: #e6c287;
+  --theme-pot: #cc7752;
+  --theme-art: #f0a04b;
+}
+
+[data-theme='crisp'] {
+  --theme-wardrobe: #f1f5f9;
+  --theme-pot: #1e3a8a;
+  --theme-art: #94a3b8;
+}
+
+[data-theme='natural'] {
+  --theme-wardrobe: #b4c5b0;
+  --theme-pot: #a3a3a3;
+  --theme-art: #4ade80;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #f0f4f8; /* Soft background if scene doesn't cover */
+}
+
+.controls-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+  width: 360px;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+}
+
+/* Glassmorphism panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  padding: 1.5rem;
+}
+
+/* Scrollbar hiding for the overlay */
+.controls-overlay::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+.controls-overlay {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+/* Modern UI elements */
+.control-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.control-label-normal {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.modern-select,
+.modern-select::picker(select) {
+  appearance: base-select;
+}
+
+.modern-select {
+  width: 100%;
+  font-family: var(--font-main);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.modern-select:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.modern-select::picker(select) {
+  font-family: var(--font-main);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.modern-select option {
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modern-select option:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Sliders */
+.modern-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.modern-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: transform 0.1s ease;
+}
+
+.modern-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Color Pickers */
+.modern-color-picker {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.modern-color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.modern-color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+.modern-color-picker:hover {
+  transform: scale(1.05);
+}
+
+/* Checkbox */
+.modern-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modern-checkbox:checked {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.modern-checkbox:checked::after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.modern-section-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.modern-btn-primary {
+  padding: 0.5rem;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.modern-btn-primary:hover {
+  background: #2563eb;
+}
+
+.modern-btn-success {
+  padding: 0.5rem;
+  background: #10b981;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.modern-btn-success:hover {
+  background: #059669;
+}
+
+.modern-btn-secondary {
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.modern-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.modern-btn-danger {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+  transition: background 0.2s;
+}
+.modern-btn-danger:hover {
+  background: #dc2626;
+}
+
+.modern-panel {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}

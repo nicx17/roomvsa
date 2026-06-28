@@ -1,0 +1,23 @@
+{
+  "name": "roomvsa",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-03-07",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "routes": [
+    {
+      "pattern": "roomvsa.nicx.dev",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
