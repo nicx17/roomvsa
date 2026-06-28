@@ -23,19 +23,16 @@ export default function Loader() {
       <div className="loader-card">
         <Loader2 className="loader-spinner" size={48} />
         <h2 className="loader-title">Loading Room VSA</h2>
-        
+
         <div className="loader-bar-container">
-          <div
-            className="loader-bar-fill"
-            style={{ width: `${progress}%` }}
-          />
+          <div className="loader-bar-fill" style={{ width: `${progress}%` }} />
         </div>
-        
-        <p className="loader-text">
-          {progress.toFixed(0)}%
-        </p>
+
+        <p className="loader-text">{progress.toFixed(0)}%</p>
         <p className="loader-detail">
-          {item ? `Loading: ${item.split('/').pop()}` : 'Initializing Engine...'}
+          {item
+            ? `Loading: ${item.split('/').pop()}`
+            : 'Initializing Engine...'}
         </p>
       </div>
     </div>

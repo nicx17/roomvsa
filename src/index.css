@@ -95,7 +95,6 @@ body {
   scrollbar-width: none;
 }
 
-
 /* Modern UI elements */
 .control-label {
   display: block;
@@ -131,7 +130,7 @@ body {
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .modern-select:hover {
@@ -145,7 +144,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   padding: 0.5rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .modern-select option {
@@ -178,7 +177,7 @@ body {
   border-radius: 50%;
   background: #3b82f6;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   transition: transform 0.1s ease;
 }
 
@@ -198,7 +197,7 @@ body {
   cursor: pointer;
   background: transparent;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s;
 }
 
@@ -237,7 +236,7 @@ body {
 }
 
 .modern-checkbox:checked::after {
-  content: "✓";
+  content: '✓';
   color: white;
   font-size: 12px;
   font-weight: bold;
@@ -370,8 +369,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loader-title {

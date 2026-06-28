@@ -1,6 +1,11 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Lightformer } from '@react-three/drei';
+import {
+  OrbitControls,
+  Environment,
+  ContactShadows,
+  Lightformer,
+} from '@react-three/drei';
 import Room from './Room';
 import Furniture from './Furniture';
 import { useRoomStore } from '../store';
@@ -37,10 +42,30 @@ export default function Scene() {
 
       <Environment resolution={256}>
         <group rotation={[-Math.PI / 4, -0.3, 0]}>
-          <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
-          <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[50, 2, 1]} />
-          <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[-5, -1, -1]} scale={[50, 2, 1]} />
-          <Lightformer intensity={2} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={[50, 2, 1]} />
+          <Lightformer
+            intensity={4}
+            rotation-x={Math.PI / 2}
+            position={[0, 5, -9]}
+            scale={[10, 10, 1]}
+          />
+          <Lightformer
+            intensity={2}
+            rotation-y={Math.PI / 2}
+            position={[-5, 1, -1]}
+            scale={[50, 2, 1]}
+          />
+          <Lightformer
+            intensity={2}
+            rotation-y={Math.PI / 2}
+            position={[-5, -1, -1]}
+            scale={[50, 2, 1]}
+          />
+          <Lightformer
+            intensity={2}
+            rotation-y={-Math.PI / 2}
+            position={[10, 1, 0]}
+            scale={[50, 2, 1]}
+          />
         </group>
       </Environment>
 

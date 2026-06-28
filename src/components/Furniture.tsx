@@ -30,7 +30,7 @@ const ItemRenderer = ({
   const windowRightHingeRef = useRef<THREE.Group>(null);
   const wardrobeLeftHingeRef = useRef<THREE.Group>(null);
   const wardrobeRightHingeRef = useRef<THREE.Group>(null);
-  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const textures = useTexture({
@@ -47,7 +47,12 @@ const ItemRenderer = ({
     });
   }, [textures]);
 
-  const activeWoodTexture = item.woodType === 'walnut' ? textures.walnut : item.woodType === 'white' ? textures.white : textures.oak;
+  const activeWoodTexture =
+    item.woodType === 'walnut'
+      ? textures.walnut
+      : item.woodType === 'white'
+        ? textures.white
+        : textures.oak;
   const woodColor = item.color || '#ffffff';
 
   useFrame((_, delta) => {
@@ -57,25 +62,25 @@ const ItemRenderer = ({
       doorHingeRef.current.rotation.y = THREE.MathUtils.lerp(
         doorHingeRef.current.rotation.y,
         targetRotation,
-        delta * 6
+        delta * 6,
       );
     }
     if (windowLeftHingeRef.current) {
       // Left window sash swings outward (+60 degrees counter-clockwise)
-      const targetRotation = isOpen ? Math.PI / 3 : 0; 
+      const targetRotation = isOpen ? Math.PI / 3 : 0;
       windowLeftHingeRef.current.rotation.y = THREE.MathUtils.lerp(
         windowLeftHingeRef.current.rotation.y,
         targetRotation,
-        delta * 6
+        delta * 6,
       );
     }
     if (windowRightHingeRef.current) {
       // Right window sash swings outward (-60 degrees clockwise)
-      const targetRotation = isOpen ? -Math.PI / 3 : 0; 
+      const targetRotation = isOpen ? -Math.PI / 3 : 0;
       windowRightHingeRef.current.rotation.y = THREE.MathUtils.lerp(
         windowRightHingeRef.current.rotation.y,
         targetRotation,
-        delta * 6
+        delta * 6,
       );
     }
     if (wardrobeLeftHingeRef.current) {
@@ -84,7 +89,7 @@ const ItemRenderer = ({
       wardrobeLeftHingeRef.current.rotation.y = THREE.MathUtils.lerp(
         wardrobeLeftHingeRef.current.rotation.y,
         targetRotation,
-        delta * 6
+        delta * 6,
       );
     }
     if (wardrobeRightHingeRef.current) {
@@ -93,7 +98,7 @@ const ItemRenderer = ({
       wardrobeRightHingeRef.current.rotation.y = THREE.MathUtils.lerp(
         wardrobeRightHingeRef.current.rotation.y,
         targetRotation,
-        delta * 6
+        delta * 6,
       );
     }
   });
@@ -116,10 +121,17 @@ const ItemRenderer = ({
       const roomL = dimensions.length;
       const wallT = 0.5;
 
-      const isFloorItem = ['wardrobe', 'table', 'pot', 'bed', 'chair', 'door'].includes(item.type);
+      const isFloorItem = [
+        'wardrobe',
+        'table',
+        'pot',
+        'bed',
+        'chair',
+        'door',
+      ].includes(item.type);
       const floorY = h / 2;
-      
-      const minY = isFloorItem ? floorY : (h / 2 + 0.001);
+
+      const minY = isFloorItem ? floorY : h / 2 + 0.001;
       const maxY = dimensions.height - h / 2 - 0.001;
 
       // Adjust for internal wall faces with a small offset to prevent Z-fighting
@@ -177,7 +189,11 @@ const ItemRenderer = ({
             {/* Back Outer */}
             <mesh position={[0, 0, -d / 2 + 0.025]} castShadow receiveShadow>
               <boxGeometry args={[w, h, 0.05]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.5} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.5}
+              />
             </mesh>
             {/* Back Inner (White) */}
             <mesh position={[0, 0, -d / 2 + 0.051]} receiveShadow>
@@ -188,7 +204,11 @@ const ItemRenderer = ({
             {/* Left Outer */}
             <mesh position={[-w / 2 + 0.025, 0, 0]} castShadow receiveShadow>
               <boxGeometry args={[0.05, h, d - 0.05]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.5} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.5}
+              />
             </mesh>
             {/* Left Inner (White) */}
             <mesh position={[-w / 2 + 0.051, 0, 0]} receiveShadow>
@@ -199,7 +219,11 @@ const ItemRenderer = ({
             {/* Right Outer */}
             <mesh position={[w / 2 - 0.025, 0, 0]} castShadow receiveShadow>
               <boxGeometry args={[0.05, h, d - 0.05]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.5} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.5}
+              />
             </mesh>
             {/* Right Inner (White) */}
             <mesh position={[w / 2 - 0.051, 0, 0]} receiveShadow>
@@ -210,7 +234,11 @@ const ItemRenderer = ({
             {/* Top Outer */}
             <mesh position={[0, h / 2 - 0.025, 0]} castShadow receiveShadow>
               <boxGeometry args={[w - 0.1, 0.05, d - 0.05]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.5} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.5}
+              />
             </mesh>
             {/* Top Inner (White) */}
             <mesh position={[0, h / 2 - 0.051, 0]} receiveShadow>
@@ -221,7 +249,11 @@ const ItemRenderer = ({
             {/* Bottom Outer */}
             <mesh position={[0, -h / 2 + 0.025, 0]} castShadow receiveShadow>
               <boxGeometry args={[w - 0.1, 0.05, d - 0.05]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.5} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.5}
+              />
             </mesh>
             {/* Bottom Inner (White) */}
             <mesh position={[0, -h / 2 + 0.051, 0]} receiveShadow>
@@ -235,45 +267,84 @@ const ItemRenderer = ({
               <meshStandardMaterial color="#ffffff" roughness={0.7} />
             </mesh>
             {/* Hanger Rod */}
-            <mesh position={[0, h / 4, 0]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+            <mesh
+              position={[0, h / 4, 0]}
+              rotation={[0, 0, Math.PI / 2]}
+              castShadow
+              receiveShadow
+            >
               <cylinderGeometry args={[0.015, 0.015, w - 0.1, 16]} />
-              <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.2} />
+              <meshStandardMaterial
+                color={item.color || '#ffffff'}
+                map={activeWoodTexture}
+                roughness={0.2}
+              />
             </mesh>
 
             {/* Wardrobe doors (left and right) */}
-            <group ref={wardrobeLeftHingeRef} position={[-w / 2 + 0.05, 0, d / 2 - 0.02]}>
+            <group
+              ref={wardrobeLeftHingeRef}
+              position={[-w / 2 + 0.05, 0, d / 2 - 0.02]}
+            >
               <mesh position={[(w / 2 - 0.05) / 2, 0, 0]}>
                 <boxGeometry args={[w / 2 - 0.05, h - 0.1, 0.04]} />
                 {/* Outer Color */}
-                <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.4} />
+                <meshStandardMaterial
+                  color={item.color || '#ffffff'}
+                  map={activeWoodTexture}
+                  roughness={0.4}
+                />
               </mesh>
               {/* Inner Door Face (White) */}
               <mesh position={[(w / 2 - 0.05) / 2, 0, -0.021]}>
                 <boxGeometry args={[w / 2 - 0.05, h - 0.1, 0.002]} />
-                <meshStandardMaterial color={item.color || '#ffffff'} map={textures.fabric} roughness={0.8} />
+                <meshStandardMaterial
+                  color={item.color || '#ffffff'}
+                  map={textures.fabric}
+                  roughness={0.8}
+                />
               </mesh>
               {/* Handle */}
               <mesh position={[w / 2 - 0.15, 0, 0.04]}>
                 <cylinderGeometry args={[0.01, 0.01, 0.2, 16]} />
-                <meshStandardMaterial color={item.color || '#e2e8f0'} map={textures.fabric} roughness={0.8} />
+                <meshStandardMaterial
+                  color={item.color || '#e2e8f0'}
+                  map={textures.fabric}
+                  roughness={0.8}
+                />
               </mesh>
             </group>
 
-            <group ref={wardrobeRightHingeRef} position={[w / 2 - 0.05, 0, d / 2 - 0.02]}>
+            <group
+              ref={wardrobeRightHingeRef}
+              position={[w / 2 - 0.05, 0, d / 2 - 0.02]}
+            >
               <mesh position={[-(w / 2 - 0.05) / 2, 0, 0]}>
                 <boxGeometry args={[w / 2 - 0.05, h - 0.1, 0.04]} />
                 {/* Outer Color */}
-                <meshStandardMaterial color={item.color || '#ffffff'} map={activeWoodTexture} roughness={0.4} />
+                <meshStandardMaterial
+                  color={item.color || '#ffffff'}
+                  map={activeWoodTexture}
+                  roughness={0.4}
+                />
               </mesh>
               {/* Inner Door Face (White) */}
               <mesh position={[-(w / 2 - 0.05) / 2, 0, -0.021]}>
                 <boxGeometry args={[w / 2 - 0.05, h - 0.1, 0.002]} />
-                <meshStandardMaterial color={item.color || '#ffffff'} map={textures.fabric} roughness={0.8} />
+                <meshStandardMaterial
+                  color={item.color || '#ffffff'}
+                  map={textures.fabric}
+                  roughness={0.8}
+                />
               </mesh>
               {/* Handle */}
               <mesh position={[-(w / 2 - 0.15), 0, 0.04]}>
                 <cylinderGeometry args={[0.01, 0.01, 0.2, 16]} />
-                <meshStandardMaterial color={item.color || '#e2e8f0'} map={textures.fabric} roughness={0.8} />
+                <meshStandardMaterial
+                  color={item.color || '#e2e8f0'}
+                  map={textures.fabric}
+                  roughness={0.8}
+                />
               </mesh>
             </group>
           </group>
@@ -289,7 +360,10 @@ const ItemRenderer = ({
               receiveShadow
               position={[0, h / 2 - 0.02, 0]}
             >
-              <meshStandardMaterial color={item.color || '#475569'} roughness={0.6} />
+              <meshStandardMaterial
+                color={item.color || '#475569'}
+                roughness={0.6}
+              />
             </RoundedBox>
             {[-1, 1].map((x) =>
               [-1, 1].map((z) => (
@@ -301,12 +375,17 @@ const ItemRenderer = ({
                 >
                   <boxGeometry args={[0.04, h, 0.04]} />
                   {/* Wood legs instead of black */}
-                  <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                  <meshStandardMaterial
+                    color={item.color || '#5c4033'}
+                    roughness={0.7}
+                  />
                 </mesh>
               )),
             )}
             {/* Left Drawer */}
-            <group position={[-(w / 2 - 0.05) / 2 - 0.005, h / 2 - 0.1, d * 0.05]}>
+            <group
+              position={[-(w / 2 - 0.05) / 2 - 0.005, h / 2 - 0.1, d * 0.05]}
+            >
               <mesh castShadow receiveShadow>
                 <boxGeometry args={[w / 2 - 0.05, 0.12, d * 0.9]} />
                 <meshStandardMaterial color="#334155" roughness={0.6} />
@@ -314,7 +393,9 @@ const ItemRenderer = ({
             </group>
 
             {/* Right Drawer */}
-            <group position={[(w / 2 - 0.05) / 2 + 0.005, h / 2 - 0.1, d * 0.05]}>
+            <group
+              position={[(w / 2 - 0.05) / 2 + 0.005, h / 2 - 0.1, d * 0.05]}
+            >
               <mesh castShadow receiveShadow>
                 <boxGeometry args={[w / 2 - 0.05, 0.12, d * 0.9]} />
                 <meshStandardMaterial color="#334155" roughness={0.6} />
@@ -326,18 +407,31 @@ const ItemRenderer = ({
               {/* Base */}
               <mesh castShadow receiveShadow position={[0, 0.005, 0]}>
                 <boxGeometry args={[0.35, 0.01, 0.25]} />
-                <meshStandardMaterial color="#cbd5e1" metalness={0.8} roughness={0.2} />
+                <meshStandardMaterial
+                  color="#cbd5e1"
+                  metalness={0.8}
+                  roughness={0.2}
+                />
               </mesh>
               {/* Screen */}
               <group position={[0, 0.01, -0.125]} rotation={[-0.2, 0, 0]}>
                 <mesh castShadow receiveShadow position={[0, 0.1, 0]}>
                   <boxGeometry args={[0.35, 0.2, 0.01]} />
-                  <meshStandardMaterial color="#cbd5e1" metalness={0.8} roughness={0.2} />
+                  <meshStandardMaterial
+                    color="#cbd5e1"
+                    metalness={0.8}
+                    roughness={0.2}
+                  />
                 </mesh>
                 {/* Display Area */}
                 <mesh position={[0, 0.1, 0.006]}>
                   <planeGeometry args={[0.33, 0.18]} />
-                  <meshStandardMaterial color="#000000" emissive="#0284c7" emissiveIntensity={0.5} roughness={0.1} />
+                  <meshStandardMaterial
+                    color="#000000"
+                    emissive="#0284c7"
+                    emissiveIntensity={0.5}
+                    roughness={0.1}
+                  />
                 </mesh>
               </group>
               {/* Keyboard */}
@@ -354,18 +448,34 @@ const ItemRenderer = ({
 
             {/* Bookshelf Speakers */}
             {[-1, 1].map((side) => (
-              <group key={`speaker-${side}`} position={[side * (w / 2 * 0.58), h / 2 + 0.09, -d * 0.08]} rotation={[-0.05, 0, 0]}>
+              <group
+                key={`speaker-${side}`}
+                position={[side * ((w / 2) * 0.58), h / 2 + 0.09, -d * 0.08]}
+                rotation={[-0.05, 0, 0]}
+              >
                 {/* Speaker Box */}
-                <RoundedBox args={[0.1, 0.18, 0.14]} radius={0.015} smoothness={4} castShadow receiveShadow>
+                <RoundedBox
+                  args={[0.1, 0.18, 0.14]}
+                  radius={0.015}
+                  smoothness={4}
+                  castShadow
+                  receiveShadow
+                >
                   <meshStandardMaterial color="#111111" roughness={0.7} />
                 </RoundedBox>
                 {/* Woofer (Large) */}
-                <mesh position={[0, -0.03, 0.071]} rotation={[Math.PI / 2, 0, 0]}>
+                <mesh
+                  position={[0, -0.03, 0.071]}
+                  rotation={[Math.PI / 2, 0, 0]}
+                >
                   <cylinderGeometry args={[0.035, 0.035, 0.005, 32]} />
                   <meshStandardMaterial color="#222222" roughness={0.9} />
                 </mesh>
                 {/* Tweeter (Small) */}
-                <mesh position={[0, 0.05, 0.071]} rotation={[Math.PI / 2, 0, 0]}>
+                <mesh
+                  position={[0, 0.05, 0.071]}
+                  rotation={[Math.PI / 2, 0, 0]}
+                >
                   <cylinderGeometry args={[0.015, 0.015, 0.005, 32]} />
                   <meshStandardMaterial color="#222222" roughness={0.9} />
                 </mesh>
@@ -400,12 +510,12 @@ const ItemRenderer = ({
                 <meshStandardMaterial color="#111111" roughness={0.8} />
               </mesh>
               {/* Lamp Head Group */}
-              <group 
+              <group
                 position={[
-                  -0.06 + 0.06 * Math.cos(Math.PI * 1.15), 
-                  0.34 + 0.06 * Math.sin(Math.PI * 1.15), 
-                  0
-                ]} 
+                  -0.06 + 0.06 * Math.cos(Math.PI * 1.15),
+                  0.34 + 0.06 * Math.sin(Math.PI * 1.15),
+                  0,
+                ]}
                 rotation={[0, 0, Math.PI * 1.15]}
               >
                 {/* Connector */}
@@ -422,14 +532,23 @@ const ItemRenderer = ({
                 <mesh position={[0, 0.09, 0]}>
                   <sphereGeometry args={[0.025, 16, 16]} />
                   {item.isOn !== false ? (
-                    <meshStandardMaterial color="#ffedd5" emissive="#ffedd5" emissiveIntensity={1} />
+                    <meshStandardMaterial
+                      color="#ffedd5"
+                      emissive="#ffedd5"
+                      emissiveIntensity={1}
+                    />
                   ) : (
                     <meshStandardMaterial color="#333333" roughness={0.6} />
                   )}
                 </mesh>
                 {/* Point Light for the lamp */}
                 {item.isOn !== false && (
-                  <pointLight position={[0, 0.1, 0]} intensity={0.5} distance={1.5} color="#ffedd5" />
+                  <pointLight
+                    position={[0, 0.1, 0]}
+                    intensity={0.5}
+                    distance={1.5}
+                    color="#ffedd5"
+                  />
                 )}
               </group>
             </group>
@@ -440,7 +559,10 @@ const ItemRenderer = ({
           <group>
             <mesh castShadow receiveShadow position={[0, 0, 0]}>
               <cylinderGeometry args={[w / 2, (w / 2) * 0.75, h, 32]} />
-              <meshStandardMaterial color={item.color || '#a0522d'} roughness={0.8} />
+              <meshStandardMaterial
+                color={item.color || '#a0522d'}
+                roughness={0.8}
+              />
             </mesh>
             <mesh castShadow position={[0, h / 2 + w / 2, 0]}>
               <sphereGeometry args={[(w / 2) * 1.5, 32, 32]} />
@@ -483,7 +605,10 @@ const ItemRenderer = ({
               receiveShadow
               position={[0, 0.01, d * 0.2]}
             >
-              <meshStandardMaterial color={item.secondaryColor || '#a0522d'} roughness={0.8} />
+              <meshStandardMaterial
+                color={item.secondaryColor || '#a0522d'}
+                roughness={0.8}
+              />
             </RoundedBox>
             <RoundedBox
               args={[w, headboardH, 0.1]}
@@ -507,7 +632,10 @@ const ItemRenderer = ({
               receiveShadow
               position={[-w * 0.25, h / 2 + 0.05, -d / 2 + 0.3]}
             >
-              <meshStandardMaterial color={item.tertiaryColor || '#f8fafc'} roughness={0.9} />
+              <meshStandardMaterial
+                color={item.tertiaryColor || '#f8fafc'}
+                roughness={0.9}
+              />
             </RoundedBox>
             <RoundedBox
               args={[w * 0.4, 0.1, 0.3]}
@@ -517,7 +645,10 @@ const ItemRenderer = ({
               receiveShadow
               position={[w * 0.25, h / 2 + 0.05, -d / 2 + 0.3]}
             >
-              <meshStandardMaterial color={item.tertiaryColor || '#f8fafc'} roughness={0.9} />
+              <meshStandardMaterial
+                color={item.tertiaryColor || '#f8fafc'}
+                roughness={0.9}
+              />
             </RoundedBox>
           </group>
         );
@@ -542,11 +673,15 @@ const ItemRenderer = ({
               <boxGeometry args={[0.05, h, d * 0.8]} />
               <meshStandardMaterial color={woodColor} roughness={0.8} />
             </mesh>
-            
+
             {/* Door Hinge Group (rotates around left frame) */}
             <group ref={doorHingeRef} position={[-w / 2 + 0.05, 0, 0]}>
               {/* Door Leaf (offset from hinge) */}
-              <mesh castShadow receiveShadow position={[doorW / 2, -0.025, 0.01]}>
+              <mesh
+                castShadow
+                receiveShadow
+                position={[doorW / 2, -0.025, 0.01]}
+              >
                 <boxGeometry args={[doorW, doorH, d * 0.6]} />
                 <meshStandardMaterial color={woodColor} roughness={0.7} />
               </mesh>
@@ -645,18 +780,22 @@ const ItemRenderer = ({
             {/* TV Screen / Bezel Outer */}
             <mesh castShadow receiveShadow position={[0, 0, 0]}>
               <boxGeometry args={[w, h, d]} />
-              <meshStandardMaterial color="#0f172a" metalness={0.9} roughness={0.3} />
+              <meshStandardMaterial
+                color="#0f172a"
+                metalness={0.9}
+                roughness={0.3}
+              />
             </mesh>
             {/* TV Display Panel */}
             <mesh position={[0, 0, d / 2 + 0.001]}>
               <planeGeometry args={[w - 0.02, h - 0.02]} />
               {/* Glossy dark screen with subtle emissive glow to simulate a backlight bleed or deep blacks */}
-              <meshStandardMaterial 
-                color="#000000" 
-                metalness={0.8} 
-                roughness={0.1} 
-                emissive="#020617" 
-                emissiveIntensity={0.5} 
+              <meshStandardMaterial
+                color="#000000"
+                metalness={0.8}
+                roughness={0.1}
+                emissive="#020617"
+                emissiveIntensity={0.5}
               />
             </mesh>
             {/* LED indicator */}
@@ -696,12 +835,12 @@ const ItemRenderer = ({
               {/* Glass panel */}
               <mesh position={[sashW / 2, 0, 0]}>
                 <boxGeometry args={[sashW, h - 0.1, d * 0.4]} />
-                <meshStandardMaterial 
+                <meshStandardMaterial
                   color={windowTint}
                   transparent={true}
                   opacity={windowOpacity}
-                  metalness={0.9} 
-                  roughness={0.1} 
+                  metalness={0.9}
+                  roughness={0.1}
                 />
               </mesh>
               {/* Vertical Sash Mullion (Center Grid) */}
@@ -734,12 +873,12 @@ const ItemRenderer = ({
               {/* Glass panel */}
               <mesh position={[-sashW / 2, 0, 0]}>
                 <boxGeometry args={[sashW, h - 0.1, d * 0.4]} />
-                <meshStandardMaterial 
+                <meshStandardMaterial
                   color={windowTint}
                   transparent={true}
                   opacity={windowOpacity}
-                  metalness={0.9} 
-                  roughness={0.1} 
+                  metalness={0.9}
+                  roughness={0.1}
                 />
               </mesh>
               {/* Vertical Sash Mullion (Center Grid) */}
@@ -774,10 +913,17 @@ const ItemRenderer = ({
             {/* Base (mounts to wall) */}
             <mesh position={[0, 0, 0]} castShadow receiveShadow>
               <boxGeometry args={[w, h, d]} />
-              <meshStandardMaterial color="#cbd5e1" roughness={0.5} metalness={0.2} />
+              <meshStandardMaterial
+                color="#cbd5e1"
+                roughness={0.5}
+                metalness={0.2}
+              />
             </mesh>
             {/* Tube (glowing part) */}
-            <mesh position={[0, 0, d / 2 + 0.015]} rotation={[0, 0, Math.PI / 2]}>
+            <mesh
+              position={[0, 0, d / 2 + 0.015]}
+              rotation={[0, 0, Math.PI / 2]}
+            >
               <cylinderGeometry args={[0.02, 0.02, w - 0.04, 32]} />
               {item.isOn !== false ? (
                 <meshBasicMaterial color="#ffffff" />
@@ -788,9 +934,25 @@ const ItemRenderer = ({
             {/* Light sources spread across the tube */}
             {item.isOn !== false && (
               <>
-                <pointLight position={[0, 0, d / 2 + 0.05]} intensity={0.8} distance={8} color="#ffffff" castShadow />
-                <pointLight position={[w / 3, 0, d / 2 + 0.05]} intensity={0.5} distance={6} color="#ffffff" />
-                <pointLight position={[-w / 3, 0, d / 2 + 0.05]} intensity={0.5} distance={6} color="#ffffff" />
+                <pointLight
+                  position={[0, 0, d / 2 + 0.05]}
+                  intensity={0.8}
+                  distance={8}
+                  color="#ffffff"
+                  castShadow
+                />
+                <pointLight
+                  position={[w / 3, 0, d / 2 + 0.05]}
+                  intensity={0.5}
+                  distance={6}
+                  color="#ffffff"
+                />
+                <pointLight
+                  position={[-w / 3, 0, d / 2 + 0.05]}
+                  intensity={0.5}
+                  distance={6}
+                  color="#ffffff"
+                />
               </>
             )}
           </group>
@@ -800,38 +962,81 @@ const ItemRenderer = ({
         return (
           <group>
             {/* Seat Frame */}
-            <RoundedBox args={[w - 0.02, 0.03, d - 0.02]} radius={0.005} position={[0, seatYOffset, 0]} castShadow receiveShadow>
-              <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+            <RoundedBox
+              args={[w - 0.02, 0.03, d - 0.02]}
+              radius={0.005}
+              position={[0, seatYOffset, 0]}
+              castShadow
+              receiveShadow
+            >
+              <meshStandardMaterial
+                color={item.color || '#5c4033'}
+                roughness={0.7}
+              />
             </RoundedBox>
-            
+
             {/* Seat Cushion (Yellow/Gold fabric) */}
-            <RoundedBox args={[w, 0.04, d]} radius={0.015} position={[0, seatYOffset + 0.035, 0.01]} castShadow receiveShadow>
+            <RoundedBox
+              args={[w, 0.04, d]}
+              radius={0.015}
+              position={[0, seatYOffset + 0.035, 0.01]}
+              castShadow
+              receiveShadow
+            >
               <meshStandardMaterial color="#d4af37" roughness={0.9} />
             </RoundedBox>
 
             {/* Front Legs - Flared out slightly */}
             {[-1, 1].map((x) => (
-              <mesh key={`fleg-${x}`} position={[(w / 2 - 0.03) * x, -0.22 + seatYOffset, d / 2 - 0.04]} rotation={[0, 0, x * 0.05]} castShadow receiveShadow>
+              <mesh
+                key={`fleg-${x}`}
+                position={[
+                  (w / 2 - 0.03) * x,
+                  -0.22 + seatYOffset,
+                  d / 2 - 0.04,
+                ]}
+                rotation={[0, 0, x * 0.05]}
+                castShadow
+                receiveShadow
+              >
                 <boxGeometry args={[0.03, 0.45, 0.03]} />
-                <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                <meshStandardMaterial
+                  color={item.color || '#5c4033'}
+                  roughness={0.7}
+                />
               </mesh>
             ))}
 
             {/* Back Legs / Side Posts - Angled backward and tapering outward */}
             {[-1, 1].map((x) => (
-              <group key={`bleg-${x}`} position={[(w / 2 - 0.03) * x, 0.075, -d / 2 + 0.04]} rotation={[-0.12, 0, x * -0.08]}>
+              <group
+                key={`bleg-${x}`}
+                position={[(w / 2 - 0.03) * x, 0.075, -d / 2 + 0.04]}
+                rotation={[-0.12, 0, x * -0.08]}
+              >
                 <mesh castShadow receiveShadow>
                   {/* Total length from floor to top rail is ~0.95 */}
                   <boxGeometry args={[0.03, 0.95, 0.03]} />
-                  <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                  <meshStandardMaterial
+                    color={item.color || '#5c4033'}
+                    roughness={0.7}
+                  />
                 </mesh>
               </group>
             ))}
 
             {/* Top Rail - Curved, wider and taller */}
             <group position={[0, 0.5, -d / 2 - 0.02]} rotation={[-0.12, 0, 0]}>
-              <RoundedBox args={[w + 0.02, 0.08, 0.02]} radius={0.005} castShadow receiveShadow>
-                <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+              <RoundedBox
+                args={[w + 0.02, 0.08, 0.02]}
+                radius={0.005}
+                castShadow
+                receiveShadow
+              >
+                <meshStandardMaterial
+                  color={item.color || '#5c4033'}
+                  roughness={0.7}
+                />
               </RoundedBox>
             </group>
 
@@ -839,33 +1044,56 @@ const ItemRenderer = ({
             <group position={[0, 0.12, -d / 2 + 0.03]} rotation={[-0.12, 0, 0]}>
               <mesh castShadow receiveShadow>
                 <boxGeometry args={[w - 0.04, 0.04, 0.02]} />
-                <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                <meshStandardMaterial
+                  color={item.color || '#5c4033'}
+                  roughness={0.7}
+                />
               </mesh>
             </group>
 
             {/* Vertical Slats in Backrest (Comb-like extending over the top rail, fanned out) */}
             {[-3, -2, -1, 0, 1, 2, 3].map((i) => (
-              <group key={`slat-${i}`} position={[i * 0.045, 0.33, -d / 2 + 0.01]} rotation={[-0.12, 0, i * -0.015]}>
+              <group
+                key={`slat-${i}`}
+                position={[i * 0.045, 0.33, -d / 2 + 0.01]}
+                rotation={[-0.12, 0, i * -0.015]}
+              >
                 <mesh castShadow receiveShadow>
                   {/* Extend from lower rail past top rail. */}
                   <boxGeometry args={[0.015, 0.48, 0.015]} />
-                  <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                  <meshStandardMaterial
+                    color={item.color || '#5c4033'}
+                    roughness={0.7}
+                  />
                 </mesh>
               </group>
             ))}
 
             {/* Stretchers (Crossbars between legs) */}
             {/* Front Stretcher */}
-            <mesh position={[0, -0.25 + seatYOffset, d / 2 - 0.04]} castShadow receiveShadow>
+            <mesh
+              position={[0, -0.25 + seatYOffset, d / 2 - 0.04]}
+              castShadow
+              receiveShadow
+            >
               <boxGeometry args={[w - 0.06, 0.02, 0.015]} />
-              <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+              <meshStandardMaterial
+                color={item.color || '#5c4033'}
+                roughness={0.7}
+              />
             </mesh>
             {/* Side Stretchers */}
             {[-1, 1].map((x) => (
-              <group key={`stretcher-side-${x}`} position={[(w / 2 - 0.03) * x, -0.25 + seatYOffset, 0]}>
+              <group
+                key={`stretcher-side-${x}`}
+                position={[(w / 2 - 0.03) * x, -0.25 + seatYOffset, 0]}
+              >
                 <mesh castShadow receiveShadow>
                   <boxGeometry args={[0.015, 0.02, d - 0.08]} />
-                  <meshStandardMaterial color={item.color || '#5c4033'} roughness={0.7} />
+                  <meshStandardMaterial
+                    color={item.color || '#5c4033'}
+                    roughness={0.7}
+                  />
                 </mesh>
               </group>
             ))}
@@ -882,7 +1110,11 @@ const ItemRenderer = ({
         <TransformControls
           object={groupObj}
           mode="translate"
-          showY={!['wardrobe', 'table', 'pot', 'bed', 'chair', 'door'].includes(item.type)}
+          showY={
+            !['wardrobe', 'table', 'pot', 'bed', 'chair', 'door'].includes(
+              item.type,
+            )
+          }
           onChange={handleObjectChange}
           onMouseUp={handleMouseUp}
         />

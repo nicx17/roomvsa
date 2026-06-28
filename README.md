@@ -16,27 +16,29 @@ Room VSA is a high-performance, client-side web application for 3D room visualiz
 
 ## Features
 
-* **3D Visualization:** Real-time rendering using Three.js and React Three Fiber.
-* **Dynamic Configuration:** Adjust room dimensions, wall colors, floor colors, and lighting directly from the control panel.
-* **Interactive Furniture:** Add, move, rotate, and customize furniture items like beds, wardrobes, and windows.
-* **Local Persistence:** Your room layout is automatically saved securely to your browser's local storage.
-* **Import/Export:** Download your room configuration as a JSON file and load it back anytime.
+- **3D Visualization:** Real-time rendering using Three.js and React Three Fiber.
+- **Dynamic Configuration:** Adjust room dimensions, wall colors, floor colors, and lighting directly from the control panel.
+- **Interactive Furniture:** Add, move, rotate, and customize furniture items like beds, wardrobes, and windows.
+- **Local Persistence:** Your room layout is automatically saved securely to your browser's local storage.
+- **Import/Export:** Download your room configuration as a JSON file and load it back anytime.
 
 ## Technical Architecture
 
-* **Frontend:** React 19, TypeScript
-* **3D Engine:** React Three Fiber, Drei, Three.js
-* **State Management:** Zustand (with Zod validation for secure persistence)
-* **Build Tool:** Vite
+- **Frontend:** React 19, TypeScript
+- **3D Engine:** React Three Fiber, Drei, Three.js
+- **State Management:** Zustand (with Zod validation for secure persistence)
+- **Build Tool:** Vite
 
 ## Getting Started
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Start the development server:
+
    ```bash
    npm run dev
    ```

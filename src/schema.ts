@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const hexColorRegex = /^#[0-9a-fA-F]{6}$/;
-export const hexColorSchema = z.string().regex(hexColorRegex, 'Invalid hex color');
+export const hexColorSchema = z
+  .string()
+  .regex(hexColorRegex, 'Invalid hex color');
 
 export const itemTypeSchema = z.enum([
   'wardrobe',

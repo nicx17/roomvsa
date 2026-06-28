@@ -12,7 +12,9 @@ export default function Room() {
   const wallColor = useRoomStore((state) => state.wallColor);
   const floorColor = useRoomStore((state) => state.floorColor);
   const lightColor = useRoomStore((state) => state.lightColor);
-  const ceilingLightIntensity = useRoomStore((state) => state.ceilingLightIntensity);
+  const ceilingLightIntensity = useRoomStore(
+    (state) => state.ceilingLightIntensity,
+  );
   const items = useRoomStore((state) => state.items);
   const floorTex = useTexture('/textures/floor.png?v=2');
   React.useMemo(() => {
@@ -64,66 +66,78 @@ export default function Room() {
     planeArgs,
     color,
     materialProps = {},
-  }: any) => (
-    <group>
-      {/* Translucent thick body */}
-      <mesh>
-        <Geometry useGroups={false}>
-          <Base position={boxPos}>
-            <boxGeometry args={boxArgs} />
-          </Base>
-          {cutouts.map((cut) => {
-            const isDoor = cut.type === 'door';
-            const cutW = cut.size[0] - (isDoor ? 0.02 : 0.05);
-            const cutH = isDoor ? cut.size[1] + 0.1 : cut.size[1] - 0.05;
-            const cutY = isDoor ? cut.position[1] - 0.05 : cut.position[1];
+  }: any) => {
+    const geoKey = JSON.stringify({
+      boxArgs,
+      planeArgs,
+      cutPos: cutouts.map((c) => [...c.position, ...c.size]),
+    });
 
-            return (
-              <Subtraction
-                key={cut.id}
-                position={[cut.position[0], cutY, cut.position[2]]}
-                rotation={cut.rotation as [number, number, number]}
-              >
-                <boxGeometry args={[cutW, cutH, 1.5]} />
-              </Subtraction>
-            );
-          })}
-        </Geometry>
-        <meshStandardMaterial
-          color={color}
-          transparent
-          opacity={0.15}
-          depthWrite={false}
-        />
-      </mesh>
+    return (
+      <group>
+        {/* Translucent thick body */}
+        <mesh>
+          <Geometry useGroups={false} key={`trans-${geoKey}`}>
+            <Base position={boxPos}>
+              <boxGeometry args={boxArgs} />
+            </Base>
+            {cutouts.map((cut) => {
+              const isDoor = cut.type === 'door';
+              const cutW = cut.size[0] - (isDoor ? 0.02 : 0.05);
+              const cutH = isDoor ? cut.size[1] + 0.1 : cut.size[1] - 0.05;
+              const cutY = isDoor ? cut.position[1] - 0.05 : cut.position[1];
 
-      {/* Opaque inner face */}
-      <mesh receiveShadow>
-        <Geometry useGroups={false}>
-          <Base position={planePos} rotation={planeRot}>
-            <planeGeometry args={planeArgs} />
-          </Base>
-          {cutouts.map((cut) => {
-            const isDoor = cut.type === 'door';
-            const cutW = cut.size[0] - (isDoor ? 0.02 : 0.05);
-            const cutH = isDoor ? cut.size[1] + 0.1 : cut.size[1] - 0.05;
-            const cutY = isDoor ? cut.position[1] - 0.05 : cut.position[1];
+              return (
+                <Subtraction
+                  key={cut.id}
+                  position={[cut.position[0], cutY, cut.position[2]]}
+                  rotation={cut.rotation as [number, number, number]}
+                >
+                  <boxGeometry args={[cutW, cutH, 1.5]} />
+                </Subtraction>
+              );
+            })}
+          </Geometry>
+          <meshStandardMaterial
+            color={color}
+            transparent
+            opacity={0.15}
+            depthWrite={false}
+          />
+        </mesh>
 
-            return (
-              <Subtraction
-                key={cut.id}
-                position={[cut.position[0], cutY, cut.position[2]]}
-                rotation={cut.rotation as [number, number, number]}
-              >
-                <boxGeometry args={[cutW, cutH, 1.5]} />
-              </Subtraction>
-            );
-          })}
-        </Geometry>
-        <meshStandardMaterial color={color} roughness={0.9} {...materialProps} />
-      </mesh>
-    </group>
-  );
+        {/* Opaque inner face */}
+        <mesh receiveShadow>
+          <Geometry useGroups={false} key={`opaque-${geoKey}`}>
+            <Base position={planePos} rotation={planeRot}>
+              <planeGeometry args={planeArgs} />
+            </Base>
+            {cutouts.map((cut) => {
+              const isDoor = cut.type === 'door';
+              const cutW = cut.size[0] - (isDoor ? 0.02 : 0.05);
+              const cutH = isDoor ? cut.size[1] + 0.1 : cut.size[1] - 0.05;
+              const cutY = isDoor ? cut.position[1] - 0.05 : cut.position[1];
+
+              return (
+                <Subtraction
+                  key={cut.id}
+                  position={[cut.position[0], cutY, cut.position[2]]}
+                  rotation={cut.rotation as [number, number, number]}
+                >
+                  <boxGeometry args={[cutW, cutH, 1.5]} />
+                </Subtraction>
+              );
+            })}
+          </Geometry>
+          <meshStandardMaterial
+            color={color}
+            roughness={0.9}
+            {...materialProps}
+          />
+        </mesh>
+      </group>
+    );
+  };
 
   return (
     <group>
@@ -134,15 +148,15 @@ export default function Room() {
         rotation={[-Math.PI / 2, 0, 0]}
       >
         <planeGeometry args={[w, l]} />
-        <meshPhysicalMaterial 
-          map={floorTex} 
-          color={floorColor} 
-          roughness={0.6} 
-          metalness={0} 
-          clearcoat={1.0} 
+        <meshPhysicalMaterial
+          map={floorTex}
+          color={floorColor}
+          roughness={0.6}
+          metalness={0}
+          clearcoat={1.0}
           clearcoatRoughness={0.1}
           emissive={floorColor}
-          emissiveIntensity={0.5} 
+          emissiveIntensity={0.5}
         />
       </mesh>
 

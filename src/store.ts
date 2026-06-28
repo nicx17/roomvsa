@@ -16,7 +16,11 @@ export interface RoomState {
   items: FurnitureItem[];
   selectedId: string | null;
 
-  setDimensions: (dims: { width: number; length: number; height: number }) => void;
+  setDimensions: (dims: {
+    width: number;
+    length: number;
+    height: number;
+  }) => void;
   setTheme: (theme: string) => void;
   setWallColor: (color: string) => void;
   setFloorColor: (color: string) => void;
@@ -37,11 +41,47 @@ export interface RoomState {
 }
 
 const defaultItems: FurnitureItem[] = [
-  { id: '1', type: 'wardrobe', position: [-1.4, 1.05, -1.1], size: [1.2, 2.2, 0.6], rotation: [0, 0, 0], woodType: 'oak' },
-  { id: '2', type: 'bed', position: [0.6, 0.2, -0.4], size: [1.4, 0.5, 2.0], rotation: [0, 0, 0], woodType: 'walnut', secondaryColor: '#a0522d', tertiaryColor: '#f8fafc' },
-  { id: '3', type: 'table', position: [-1.4, 0.315, 0.8], size: [1.2, 0.73, 0.6], rotation: [0, Math.PI / 2, 0], woodType: 'white' },
-  { id: '4', type: 'door', position: [0.5, 1.0, 1.45], size: [0.9, 2.1, 0.1], rotation: [0, Math.PI, 0], woodType: 'white' },
-  { id: '5', type: 'window', position: [-2.15, 1.2, 0], size: [1.07, 1.5, 0.08], rotation: [0, Math.PI / 2, 0] },
+  {
+    id: '1',
+    type: 'wardrobe',
+    position: [-1.4, 1.05, -1.1],
+    size: [1.2, 2.2, 0.6],
+    rotation: [0, 0, 0],
+    woodType: 'oak',
+  },
+  {
+    id: '2',
+    type: 'bed',
+    position: [0.6, 0.2, -0.4],
+    size: [1.4, 0.5, 2.0],
+    rotation: [0, 0, 0],
+    woodType: 'walnut',
+    secondaryColor: '#a0522d',
+    tertiaryColor: '#f8fafc',
+  },
+  {
+    id: '3',
+    type: 'table',
+    position: [-1.4, 0.315, 0.8],
+    size: [1.2, 0.73, 0.6],
+    rotation: [0, Math.PI / 2, 0],
+    woodType: 'white',
+  },
+  {
+    id: '4',
+    type: 'door',
+    position: [0.5, 1.0, 1.45],
+    size: [0.9, 2.1, 0.1],
+    rotation: [0, Math.PI, 0],
+    woodType: 'white',
+  },
+  {
+    id: '5',
+    type: 'window',
+    position: [-2.15, 1.2, 0],
+    size: [1.07, 1.5, 0.08],
+    rotation: [0, Math.PI / 2, 0],
+  },
 ];
 
 export const useRoomStore = create<RoomState>()(
@@ -65,7 +105,8 @@ export const useRoomStore = create<RoomState>()(
       setFloorColor: (floorColor) => set({ floorColor }),
       setLightColor: (lightColor) => set({ lightColor }),
       setEnvLightIntensity: (envLightIntensity) => set({ envLightIntensity }),
-      setCeilingLightIntensity: (ceilingLightIntensity) => set({ ceilingLightIntensity }),
+      setCeilingLightIntensity: (ceilingLightIntensity) =>
+        set({ ceilingLightIntensity }),
       setWindowTint: (windowTint) => set({ windowTint }),
       setWindowOpacity: (windowOpacity) => set({ windowOpacity }),
       setItems: (items) => set({ items }),
@@ -73,7 +114,9 @@ export const useRoomStore = create<RoomState>()(
 
       updateItem: (id, updates) =>
         set((state) => ({
-          items: state.items.map((item) => (item.id === id ? { ...item, ...updates } : item)),
+          items: state.items.map((item) =>
+            item.id === id ? { ...item, ...updates } : item,
+          ),
         })),
 
       removeItem: (id) =>
@@ -87,7 +130,8 @@ export const useRoomStore = create<RoomState>()(
 
       addItem: (type) => {
         const newItem: FurnitureItem = {
-          id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
+          id:
+            Date.now().toString() + Math.random().toString(36).substring(2, 9),
           type,
           position: [0, 1, 0],
           size: [1, 1, 1],
@@ -118,8 +162,15 @@ export const useRoomStore = create<RoomState>()(
           newItem.isOn = true;
           newItem.color = '#ffffff';
         }
-        
-        const isFloorItem = ['wardrobe', 'table', 'pot', 'bed', 'chair', 'door'].includes(type);
+
+        const isFloorItem = [
+          'wardrobe',
+          'table',
+          'pot',
+          'bed',
+          'chair',
+          'door',
+        ].includes(type);
         if (isFloorItem) {
           newItem.position[1] = newItem.size[1] / 2 - 0.05;
         }
@@ -133,7 +184,9 @@ export const useRoomStore = create<RoomState>()(
           if (!itemToCopy) return state;
           const newItem = {
             ...itemToCopy,
-            id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
+            id:
+              Date.now().toString() +
+              Math.random().toString(36).substring(2, 9),
             position: [
               itemToCopy.position[0] + 0.2,
               itemToCopy.position[1],
@@ -152,8 +205,10 @@ export const useRoomStore = create<RoomState>()(
           wallColor: config.wallColor ?? state.wallColor,
           floorColor: config.floorColor ?? state.floorColor,
           lightColor: config.lightColor ?? state.lightColor,
-          envLightIntensity: config.envLightIntensity ?? state.envLightIntensity,
-          ceilingLightIntensity: config.ceilingLightIntensity ?? state.ceilingLightIntensity,
+          envLightIntensity:
+            config.envLightIntensity ?? state.envLightIntensity,
+          ceilingLightIntensity:
+            config.ceilingLightIntensity ?? state.ceilingLightIntensity,
           windowTint: config.windowTint ?? state.windowTint,
           windowOpacity: config.windowOpacity ?? state.windowOpacity,
           items: config.items ?? state.items,
@@ -171,6 +226,6 @@ export const useRoomStore = create<RoomState>()(
         }
         return currentState;
       },
-    }
-  )
+    },
+  ),
 );
