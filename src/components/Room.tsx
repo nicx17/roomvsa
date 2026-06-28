@@ -16,7 +16,7 @@ export default function Room() {
     (state) => state.ceilingLightIntensity,
   );
   const items = useRoomStore((state) => state.items);
-  const floorTex = useTexture('/textures/floor.png?v=2');
+  const floorTex = useTexture('/assets/textures/floor.png?v=2');
   React.useMemo(() => {
     floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping;
     floorTex.repeat.set(dimensions.width / 0.6, dimensions.length / 0.6);

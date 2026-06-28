@@ -34,10 +34,10 @@ const ItemRenderer = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const textures = useTexture({
-    oak: '/textures/wood_oak.png',
-    walnut: '/textures/wood_walnut.png',
-    white: '/textures/wood_white.png',
-    fabric: '/textures/fabric.png',
+    oak: '/assets/textures/wood_oak.png',
+    walnut: '/assets/textures/wood_walnut.png',
+    white: '/assets/textures/wood_white.png',
+    fabric: '/assets/textures/fabric.png',
   });
 
   React.useMemo(() => {
@@ -1153,11 +1153,11 @@ export default function Furniture() {
   const windowTint = useRoomStore((state) => state.windowTint);
   const windowOpacity = useRoomStore((state) => state.windowOpacity);
   const textures = {
-    warm: useTexture('/warm.png'),
-    crisp: useTexture('/crisp.png'),
-    natural: useTexture('/natural.png'),
-    jewel: useTexture('/jewel.png'),
-    sunset: useTexture('/sunset.png'),
+    warm: useTexture('/assets/warm.png'),
+    crisp: useTexture('/assets/crisp.png'),
+    natural: useTexture('/assets/natural.png'),
+    jewel: useTexture('/assets/jewel.png'),
+    sunset: useTexture('/assets/sunset.png'),
   };
 
   Object.values(textures).forEach((tex) => {

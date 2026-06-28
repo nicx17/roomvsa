@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/logo.png" alt="Room VSA Logo" width="150" />
+  <img src="public/assets/logo.png" alt="Room VSA Logo" width="150" />
   <h1>Room VSA (Visual Space Analysis)</h1>
   <p><strong><a href="https://roomvsa.nicx.dev">Live Site : roomvsa.nicx.dev</a></strong></p>
 
@@ -13,6 +13,20 @@
 </div>
 
 Room VSA is a high-performance, client-side web application for 3D room visualization and interior design. Built with React, Vite, and React Three Fiber, it allows users to dynamically configure room dimensions, swap themes, and manipulate furniture in real-time.
+
+## Demo and Screenshots
+
+**Video Demo**
+
+<video src="public/assets/demo.mp4" width="100%" controls></video>
+
+**Screenshots**
+
+<div align="center">
+  <img src="public/assets/screenshot1.png" alt="Room VSA Interface 1" width="32%" />
+  <img src="public/assets/screenshot2.png" alt="Room VSA Interface 2" width="32%" />
+  <img src="public/assets/screenshot3.png" alt="Room VSA Interface 3" width="32%" />
+</div>
 
 ## Features
 
