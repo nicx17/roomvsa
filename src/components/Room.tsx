@@ -67,17 +67,11 @@ export default function Room() {
     color,
     materialProps = {},
   }: any) => {
-    const geoKey = JSON.stringify({
-      boxArgs,
-      planeArgs,
-      cutPos: cutouts.map((c) => [...c.position, ...c.size]),
-    });
-
     return (
       <group>
         {/* Translucent thick body */}
         <mesh>
-          <Geometry useGroups={false} key={`trans-${geoKey}`}>
+          <Geometry useGroups={false}>
             <Base position={boxPos}>
               <boxGeometry args={boxArgs} />
             </Base>
@@ -108,7 +102,7 @@ export default function Room() {
 
         {/* Opaque inner face */}
         <mesh receiveShadow>
-          <Geometry useGroups={false} key={`opaque-${geoKey}`}>
+          <Geometry useGroups={false}>
             <Base position={planePos} rotation={planeRot}>
               <planeGeometry args={planeArgs} />
             </Base>

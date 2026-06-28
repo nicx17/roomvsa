@@ -17,10 +17,20 @@ export default function Scene() {
 
   const cameraZ = Math.max(dimensions.length + 5, 8);
   const cameraY = dimensions.height;
+  const maxDim = Math.max(
+    dimensions.width,
+    dimensions.length,
+    dimensions.height,
+  );
+  const shadowSize = maxDim * 1.5;
 
   return (
     <Canvas
-      camera={{ position: [0, cameraY, cameraZ], fov: 50 }}
+      camera={{
+        position: [0, cameraY, cameraZ],
+        fov: 50,
+        far: Math.max(2000, maxDim * 3),
+      }}
       shadows
       dpr={[1, 1.5]}
       onPointerMissed={() => setSelectedId(null)}
@@ -29,15 +39,15 @@ export default function Scene() {
 
       <ambientLight intensity={envLightIntensity} />
       <directionalLight
-        position={[5, 10, 5]}
+        position={[maxDim, maxDim * 1.5, maxDim]}
         intensity={envLightIntensity * 2}
         castShadow
-        shadow-mapSize={1024}
-        shadow-camera-far={20}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
+        shadow-mapSize={2048} // increased for larger potential rooms
+        shadow-camera-far={maxDim * 3}
+        shadow-camera-left={-shadowSize}
+        shadow-camera-right={shadowSize}
+        shadow-camera-top={shadowSize}
+        shadow-camera-bottom={-shadowSize}
       />
 
       <Environment resolution={256}>

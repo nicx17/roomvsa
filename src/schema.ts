@@ -20,9 +20,9 @@ export const itemTypeSchema = z.enum([
 ]);
 
 export const dimensionsSchema = z.object({
-  width: z.number().min(2).max(10),
-  length: z.number().min(2).max(10),
-  height: z.number().min(2).max(5),
+  width: z.number().min(2).max(100),
+  length: z.number().min(2).max(100),
+  height: z.number().min(2).max(100),
 });
 
 export const furnitureItemSchema = z.object({

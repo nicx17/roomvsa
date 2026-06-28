@@ -49,11 +49,45 @@ export default function ControlPanel() {
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  const [localDims, setLocalDims] = useState({
+    width: dimensions.width.toString(),
+    length: dimensions.length.toString(),
+    height: dimensions.height.toString(),
+  });
+
+  React.useEffect(() => {
+    setLocalDims({
+      width: dimensions.width.toString(),
+      length: dimensions.length.toString(),
+      height: dimensions.height.toString(),
+    });
+  }, [dimensions]);
+
   const handleDimensionChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     key: string,
   ) => {
-    setDimensions((prev) => ({ ...prev, [key]: parseFloat(e.target.value) }));
+    setDimensions({ ...dimensions, [key]: parseFloat(e.target.value) });
+  };
+
+  const handleLocalDimChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: string,
+  ) => {
+    setLocalDims((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleDimensionInputBlur = (
+    e: React.FocusEvent<HTMLInputElement>,
+    key: string,
+  ) => {
+    let val = parseFloat(e.target.value);
+    if (isNaN(val)) val = 2; // fallback minimum
+    val = Math.max(2, Math.min(100, val));
+    val = Math.round(val * 100) / 100; // sanitize to 2 decimal places
+
+    // Commit clamped and formatted value to store
+    setDimensions({ ...dimensions, [key]: val });
   };
 
   const handleSaveConfig = () => {
@@ -215,13 +249,38 @@ export default function ControlPanel() {
                 }}
               >
                 <div>
-                  <label className="control-label">
-                    Width: {dimensions.width}m
-                  </label>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    <label className="control-label" style={{ margin: 0 }}>
+                      Width (m)
+                    </label>
+                    <input
+                      type="number"
+                      min="2"
+                      max="100"
+                      step="0.01"
+                      value={localDims.width}
+                      onChange={(e) => handleLocalDimChange(e, 'width')}
+                      onBlur={(e) => handleDimensionInputBlur(e, 'width')}
+                      className="modern-input"
+                      style={{
+                        width: '80px',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        border: '1px solid #cbd5e1',
+                      }}
+                    />
+                  </div>
                   <input
                     type="range"
                     min="2"
-                    max="10"
+                    max="100"
                     step="0.1"
                     value={dimensions.width}
                     onChange={(e) => handleDimensionChange(e, 'width')}
@@ -229,13 +288,38 @@ export default function ControlPanel() {
                   />
                 </div>
                 <div>
-                  <label className="control-label">
-                    Length: {dimensions.length}m
-                  </label>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    <label className="control-label" style={{ margin: 0 }}>
+                      Length (m)
+                    </label>
+                    <input
+                      type="number"
+                      min="2"
+                      max="100"
+                      step="0.01"
+                      value={localDims.length}
+                      onChange={(e) => handleLocalDimChange(e, 'length')}
+                      onBlur={(e) => handleDimensionInputBlur(e, 'length')}
+                      className="modern-input"
+                      style={{
+                        width: '80px',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        border: '1px solid #cbd5e1',
+                      }}
+                    />
+                  </div>
                   <input
                     type="range"
                     min="2"
-                    max="10"
+                    max="100"
                     step="0.1"
                     value={dimensions.length}
                     onChange={(e) => handleDimensionChange(e, 'length')}
@@ -243,13 +327,38 @@ export default function ControlPanel() {
                   />
                 </div>
                 <div>
-                  <label className="control-label">
-                    Height: {dimensions.height}m
-                  </label>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    <label className="control-label" style={{ margin: 0 }}>
+                      Height (m)
+                    </label>
+                    <input
+                      type="number"
+                      min="2"
+                      max="100"
+                      step="0.01"
+                      value={localDims.height}
+                      onChange={(e) => handleLocalDimChange(e, 'height')}
+                      onBlur={(e) => handleDimensionInputBlur(e, 'height')}
+                      className="modern-input"
+                      style={{
+                        width: '80px',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        border: '1px solid #cbd5e1',
+                      }}
+                    />
+                  </div>
                   <input
                     type="range"
                     min="2"
-                    max="5"
+                    max="100"
                     step="0.1"
                     value={dimensions.height}
                     onChange={(e) => handleDimensionChange(e, 'height')}
