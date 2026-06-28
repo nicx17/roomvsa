@@ -98,7 +98,8 @@ export default function Scene() {
         enableZoom={true}
         enableRotate={true}
         target={[0, dimensions.height / 2, 0]}
-        maxPolarAngle={Math.PI / 2 + 0.1}
+        maxDistance={maxDim * 4}
+        minDistance={0.5}
         makeDefault
       />
     </Canvas>
